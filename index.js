@@ -23,13 +23,28 @@ const client = new MongoClient(uri, {
   }
 });
 
+
+const petsData = client.db('petsDb').collection('pets');
+
+
 async function run() {
   try {
    
 
+    app.get('/pets', async (req, res) => {
+      const result = await petsData.find().toArray();
+      res.send(result);
+})
 
 
 
+
+    app.post('/pets', async (req, res) => {
+      const data = req.body;
+      const result = await petsData.insertOne(data);
+      console.log("data",data);
+      res.send(result)
+})
 
 
 
